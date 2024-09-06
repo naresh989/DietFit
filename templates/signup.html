@@ -1,0 +1,327 @@
+<!DOCTYPE html>
+<html lang="en" >
+<head>
+  <meta charset="UTF-8">
+  <title>SignUp Page</title>
+  <link href="https://fonts.googleapis.com/css?family=Open+Sans" rel="stylesheet">
+<style>
+    .hidden-paragraph {
+      visibility: hidden;
+    }
+	body {
+  
+  background: #b1dcc3f4;
+  background-size: cover;
+  background-repeat: no-repeat;
+  background-attachment: fixed;
+  font-family: "Open Sans", sans-serif;
+  color: #333333;
+}
+
+.box-form {
+  display: flex;
+  width: 1300px;
+  max-width: 100%;
+  height: 700px;
+  background-color: #fff;
+  border-radius: 10px;
+  box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
+  overflow: hidden;
+  margin: 0 auto;
+}
+@media (max-width: 980px) {
+  .box-form {
+    flex-flow: wrap;
+    text-align: center;
+    align-content: center;
+    align-items: center;
+  }
+}
+.box-form div {
+  height: auto;
+}
+.box-form .left {
+  color: #060505;
+  width:900px;
+  background-size: cover;
+  background-repeat: no-repeat;
+  /* background-image: url("https://i.pinimg.com/736x/5d/73/ea/5d73eaabb25e3805de1f8cdea7df4a42--tumblr-backgrounds-iphone-phone-wallpapers-iphone-wallaper-tumblr.jpg"); */
+  background-image: url('static/images/dietfit.png');
+  overflow: hidden;
+}
+.box-form .left .overlay {
+  padding: 30px;
+  width: 100%;
+  height: 100%;
+  /* background: #5961f9ad; */
+  overflow: hidden;
+  box-sizing: border-box;
+}
+.box-form .left .overlay h1 {
+  font-size: 10vmax;
+  line-height: 1;
+  font-weight: 900;
+  margin-top: 40px;
+  margin-bottom: 20px;
+}
+.box-form .left .overlay span p {
+  margin-top: 30px;
+  font-weight: 900;
+}
+.box-form .left .overlay span a {
+  background: #3b5998;
+  color: #FFFFFF;
+  margin-top: 10px;
+  padding: 14px 50px;
+  border-radius: 100px;
+  display: inline-block;
+  box-shadow: 0 3px 6px 1px #042d4657;
+}
+.box-form .left .overlay span a:last-child {
+  background: #1dcaff;
+  margin-left: 30px;
+}
+.box-form .right {
+  padding: 40px;
+  width: 700px;
+  overflow: hidden;
+}
+.box-form .right h1 {
+    font-weight: bold;
+    font-size: 80px;
+}
+@media (max-width: 980px) {
+  .box-form .right {
+    width: 100%;
+  }
+}x
+.box-form .right h5 {
+  font-size: 6vmax;
+  line-height: 0;
+}
+.box-form .right p {
+  font-size: 14px;
+  color: #B0B3B9;
+}
+.box-form .right .inputs {
+  overflow: hidden;
+}
+.box-form .right input {
+  width: 100%;
+  padding: 10px;
+  margin-top: 25px;
+  font-size: 16px;
+  border: none;
+  outline: none;
+  border-bottom: 2px solid #B0B3B9;
+}
+.box-form .right .remember-me--forget-password {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+.box-form .right .remember-me--forget-password input {
+  margin: 0;
+  margin-right: 7px;
+  width: auto;
+}
+.box-form .right button {
+  float: right;
+  color: #fff;
+  font-size: 16px;
+  padding: 12px 35px;
+  border-radius: 50px;
+  display: inline-block;
+  border: 0;
+  outline: 0;
+  box-shadow: 0px 4px 20px 0px #49c628a6;
+  background-image: linear-gradient(135deg, #70F570 10%, #49C628 100%);
+}
+
+label {
+  display: block;
+  position: relative;
+  margin-left: 30px;
+}
+
+label::before {
+  content: ' \f00c';
+  position: absolute;
+  font-family: FontAwesome;
+  background: transparent;
+  border: 3px solid #70F570;
+  border-radius: 4px;
+  color: transparent;
+  left: -30px;
+  transition: all 0.2s linear;
+}
+
+label:hover::before {
+  font-family: FontAwesome;
+  content: ' \f00c';
+  color: #fff;
+  cursor: pointer;
+  background: #70F570;
+}
+
+label:hover::before .text-checkbox {
+  background: #70F570;
+}
+
+label span.text-checkbox {
+  display: inline-block;
+  height: auto;
+  position: relative;
+  cursor: pointer;
+  transition: all 0.2s linear;
+}
+
+label input[type="checkbox"] {
+  display: none;
+}
+
+.pass {
+  margin: -5px 0 20px 5px;
+  color: #a6a6a6;
+  cursor: pointer;
+}
+
+input[type="submit"] {
+  width: 100%;
+  height: 50px;
+  background: #2691d9;
+  border-radius: 25px;
+  font-size: 18px;
+  color: #e9f4fb;
+  font-weight: 700;
+  cursor: pointer;
+  outline: none;
+  transition: 0.5s;
+  border: none;
+}
+
+.color-grey-9{
+  display:none;
+}
+
+#loginButton {
+  width:30%; /* Adjust the width percentage or use an absolute value like width: 150px; */
+  height: 50px;
+  background: #2691d9;
+  border-radius: 10px;
+  font-size: 18px;
+  color: #e9f4fb;
+  font-weight: 700;
+  cursor: pointer;
+  outline: none;
+  transition: 0.5s;
+  border: none;
+}
+.button-container {
+  text-align: center;
+}
+  </style>
+</head>
+<body>
+<!-- partial:index.partial.html -->
+<br>
+<br>
+<div class="box-form">
+	<div class="left">
+		<div class="overlay">
+			<br>
+			<br>
+			<br>
+		
+		</div>
+	</div>
+	
+	
+		<div class="right">
+      <h1>DietFit</h1>
+            <h2>SignUp</h2>
+            <p class="hidden-paragraph">Don't have an account? <a a href="signup">Creat Your Account</a> it takes less than a minute</p>
+		<div class="inputs">
+            <input type="text" id="firstName" placeholder="FirstName">
+            <br>
+            <input type="text" id="lastName" placeholder="LastName">
+            <br>
+			<input type="text" id="email" placeholder="Email">
+			<br>
+			<input type="password" id="password" placeholder="Password">
+        <div class="button-container">
+          <input  id="loginButton" type="submit" value="Signup" onclick="signup()"/>
+        </div>
+	
+</div>
+
+<script>
+    function signup() {
+        event.preventDefault();
+        const firstNameInput = document.getElementById('firstName');
+        const lastNameInput = document.getElementById('lastName');
+        const emailInput = document.getElementById('email');
+        const passwordInput = document.getElementById('password');
+        const emailRegex = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
+        const passwordRegex = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{9,}$/;
+
+        firstName = firstNameInput.value;
+        lastName = lastNameInput.value;
+        email = emailInput.value;
+        password = passwordInput.value;
+        var data = {
+            "firstName": firstName,
+            "lastName": lastName,
+            "email": email,
+            "password": password
+        };
+
+        if (!firstName || !lastName || !email || !password) {
+            alert("Please enter all the fields.");
+            return;
+        }
+        let errorMessage = "";
+        if (!emailRegex.test(email)) {
+            errorMessage += "Entered email is invalid - (Valid format: name@example.com)\n";
+        }
+
+        if (!passwordRegex.test(password)) {
+            errorMessage += "Entered password should contain Lower case character[a-z],Upper case character [A-z], special character and should be 9 characters \n";
+        }
+
+        if (errorMessage) {
+            alert("Validation Error:\n" + errorMessage);
+        }else{
+            // Send this data to the server for storage in a JSON file
+        fetch('/signupCheck', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify(data)
+        })
+        .then(response => response.json())
+        .then(result => {
+            if (result.success) {
+                alert('User Signed up successfully');
+                window.location.href = 'login'
+            } else  {
+                alert('Sign-up failed: ' + result.message);
+                firstNameInput.value = ''
+                lastNameInput.value = ''
+                emailInput.value = ''
+                passwordInput.value = ''
+            }
+        })
+        .catch(error => console.error('Error:', error));
+        }   
+        firstNameInput.value = ''
+        lastNameInput.value = ''
+        emailInput.value = ''
+        passwordInput.value = ''
+    }
+
+</script>
+  
+</body>
+</html>

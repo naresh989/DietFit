@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html lang="en" >
+<head>
+  <meta charset="UTF-8">
+  <title>Home</title>
+  <link rel="stylesheet" href="static/styles.css">
+<style>
+
+header1 {
+            background-color: #4caf9b;
+            color: #fff;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 20px;
+        }
+
+        .flex-container {
+            display: flex;
+            justify-content: space-around;
+            margin: 20px;
+        }
+
+        .flex-item-card {
+            text-align: center;
+            background-color: #F3FFF3;
+            margin: 0.3rem;
+            border-radius: 10px;
+            box-shadow: 0 10px 10px rgba(0, 0, 0, 0.3);
+            padding: 5.5%;
+        }
+
+        .flex-item-card .material-icons.md-48 {
+            font-size: 60px;
+            color: #67ab3a;
+        }
+
+        .flex-item-card .navlink {
+            text-decoration: none;
+            font-size: 35px;
+            font-weight: bold;
+            color: #67ab3a;
+        }
+</style>
+</head>
+<body>
+    <div class="navbar">
+        <a id="brand" href="home">DietFit</a>
+        <a href="home">Home</a>
+        <a href="about">About Us</a>
+  
+        <div class="middle">
+            <a href="bmi">BMI</a>
+            <a href="calorie">Calorie</a>
+            <a href="dietplan">Diet Plan</a>
+            <a href="exerciseplan">Exercise Plan</a>
+        </div>
+  
+        <a href="login">Logout</a>
+      </div>
+</br>
+    <header>
+      <h1 class="pageHeader">MyDietDiary</h1>
+      <div class="intro flex-container-intro">
+          <div class="flex-item-card-intro">
+              <div class="greetings">
+                  <h1 id="greeting"></h1>
+                  <h2>What would you like to do?</h2>
+              </div>
+          </div>
+      </div>
+  </header>
+
+  <div class="flex-container padding-nav-cards">
+    <div class="flex-item-card cards-color">
+        <a class="navlink" href="bmi">
+            <div>
+                <span class="material-icons md-48 center margin-card-title">calculate</span>
+            </div>
+            <p class="center">Calculate My BMI</p>
+        </a>
+    </div>
+
+    <div class="flex-item-card cards-color">
+        <a class="navlink" href="dietplan">
+            <div>
+                <span class="material-icons md-48 center margin-card-title">edit_calendar</span>
+            </div>
+            <p class="center">View My Diet Plan</p>
+        </a>
+    </div>
+
+    <div class="flex-item-card cards-color">
+        <a class="navlink" href="exerciseplan">
+            <div>
+                <span class="material-icons md-48 center margin-card-title">calendar_month</span>
+            </div>
+            <p class="center">View My Exercise Plan</p>
+        </a>
+    </div>
+</div>
+
+<script>
+    var userEmail = sessionStorage.getItem('userEmail');
+    var greetingElement = document.getElementById('greeting');
+    var firstName =""
+    var data = {
+        email: userEmail
+    }
+
+    fetch('/getFirstname', {
+        "method": "Post",
+        headers: {
+            'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(data)
+    })
+    .then(response => response.json())
+    .then(result => {
+        greetingElement.textContent = 'Hi, ' + result.firstName + '!';
+    })
+    .catch(error => {
+        console.error('Error:', error);
+        alert('An error occurred while processing request for getting firstname');
+    });
+
+</script>
+</body>
+</html>

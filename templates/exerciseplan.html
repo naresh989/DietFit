@@ -1,0 +1,717 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Exercise Plan</title>
+    <link rel="stylesheet" href="static/styles.css">
+    <style>
+        /* body {
+            margin: 0;
+            padding: 0;
+            font-family: Arial, sans-serif;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            background-color: #b1dcc3f4;;
+        } */
+
+        .box {
+            display: flex;
+            width: 1370px;
+            max-width: 100%;
+            height: 640px;
+            background-color: #fff;
+            border-radius: 10px;
+            box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
+            overflow: hidden;
+            margin: 0 auto;
+        }
+
+        .column {
+            flex: 1;
+            padding: 30px;
+        }
+
+        .column:first-child {
+            background-color: black;
+            flex: 0 0 350px;
+            color: #fff;
+        }
+
+        .column:nth-child(2) {
+            background-color: white;
+            width: 1000px;
+            color: black;
+            overflow-y: auto;
+        }
+
+        .column:last-child {
+            border-left: 1px solid #e0e0e0;
+            padding: 20px;
+            flex: 0 0 350px;
+            overflow-y: auto;
+            display: flex;
+            flex-direction: column; 
+        }
+
+        .column h3 {
+            font-size: 18px;
+        }
+
+        .column a {
+            display: block;
+            margin: 10px 0;
+            color: #67ab3a;
+            text-decoration: none;
+            cursor: pointer;
+        }
+
+        .selectable-cell {
+            border: 1px solid #e0e0e0;
+            padding: 10px;
+            margin: 5px;
+            cursor: pointer;
+            text-align: center;
+            display: flex;
+            justify-content: space-between;
+        }
+
+        .selected-meals {
+            text-align: center;
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: space-between;
+        }
+
+        .selected-meals p {
+            margin: 5px 0;
+            border: 1px solid #e0e0e0;
+            padding: 5px;
+            position: relative;
+        }
+
+        .delete-button {
+            color: #ff0000;
+            cursor: pointer;
+            position: absolute;
+            top: 0;
+            right: 0;
+        }
+
+        .selected {
+            background-color: #67ab3a;
+            color: #fff;
+        }
+
+        .highlight {
+            background-color: #ffcccb;
+        }
+
+        .row {
+            display: flex;
+            justify-content: space-between;
+        }
+
+        .clickable-icon {
+            cursor: pointer;
+        }
+
+        .category-section {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            grid-gap: 10px;
+            max-height: 2000px; /* Adjust the height as needed */
+            overflow-y: auto;
+        }
+
+        .selectable-cell:hover {
+            background-color: #f0f0f0;
+        }
+
+        .selectable-cell.selected-cell {
+            /* change here */
+            background-color: #378e74;
+            color: white;
+        }
+
+        #third-column .selected-cell {
+            background-color: #378e74;
+            color: white;
+            padding: 10px;
+            margin: 5px;
+            border-radius: 5px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .row-container {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px; /* Adjust the gap between cells as needed */
+        }
+        .search-button {
+            background-color: #4caf50;
+            color: white;
+            padding: 10px;
+            border: none;
+            border-radius: 100px;
+            cursor: pointer;
+            margin-top: 10px;
+        }
+
+        .navbar a {
+    color: black;
+    text-decoration: none;
+    /* text-shadow: 0 0 15px black; */
+    font-size: 20px;
+    padding: 20px;
+    font-weight: bold;
+}
+
+.navbar a:hover {
+    background-color: #55b677; /* Change background color on hover */
+}
+
+.navbar #brand {
+    font-weight: bold;
+}
+
+.navbar .middle {
+    margin: auto;
+}
+    .meal-plan {
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: space-around;
+        margin: 20px;
+    }
+
+    .day-box {
+        width: calc(33.33% - 20px);
+        background-color: white;
+        border-radius: 10px;
+        box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
+        margin: 10px;
+        padding: 15px;
+        box-sizing: border-box;
+    }
+    .meal {
+        margin-bottom: 10px;
+    }
+    .calories-input-container {
+    display: flex;
+    gap: 10px;
+    }
+
+    .cal-input {
+    padding: 5px;
+    width: 80px; /* Adjust the width as needed */
+    }
+
+    .calorie-range-cell {
+    background-color: #4caf50;
+    color: white;
+    border-radius: 5px;
+    padding: 10px;
+    margin: 5px;
+    display: flex;
+    justify-content: space-between;
+    }
+
+    .calorie-range-cell .remove-button {
+    cursor: pointer;
+    }
+    .colored-button {
+            background-color: #378e74; /* Set the background color to a shade of blue */
+            color: white; /* Set the text color to white */
+            padding: 10px 20px; /* Adjust the padding for button size */
+            border: none; /* Remove the default button border */
+            border-radius: 5px; /* Add rounded corners */
+            cursor: pointer; /* Change the cursor to a pointer on hover */
+        }
+        .exercise-plan-container {
+    display: flex;
+    flex-wrap: wrap;
+}
+
+.day-container {
+    flex: 1 0 100%; /* Each day container takes the full width */
+    margin: 10px 0; /* Added vertical margin for better separation */
+    border: 1px solid #b1dcc3f4
+}
+
+.row {
+    display: flex;
+}
+
+.exercise-box {
+    flex: 1 0 400px; /* Each exercise box takes about 33% width with some margin */
+    background: white;
+    margin: 10px;
+    padding: 10px;
+    border: 1px solid #4bb468;
+}
+
+button {
+    background-color: #378e74;
+    color: white;
+    border: none;
+    padding: 8px 16px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 14px;
+    cursor: pointer;
+}
+
+/* button:hover {
+    background-color: #45a049;
+} */
+
+.modal {
+    display: none;
+    position: fixed;
+    z-index: 1;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    overflow: auto;
+    background-color: rgb(0, 0, 0);
+    background-color: rgba(0, 0, 0, 0.4);
+}
+
+.modal-content {
+    background-color: white;
+    margin: 15% auto;
+    padding: 20px;
+    border: 1px solid #888;
+    width: 80%;
+}
+
+.close {
+    color: #c64b4b;
+    float: right;
+    font-size: 28px;
+    font-weight: bold;
+}
+
+.close:hover,
+.close:focus {
+    color: rgb(179, 104, 104);
+    text-decoration: none;
+    cursor: pointer;
+}
+
+
+    </style>
+</head>
+
+<body>
+    <div class="navbar">
+        <a id="brand" href="home">DietFit</a>
+        <a href="home">Home</a>
+        <a href="about">About Us</a>
+  
+        <div class="middle">
+            <a href="bmi">BMI</a>
+            <a href="calorie">Calorie</a>
+            <a href="dietplan">Diet Plan</a>
+            <a href="exerciseplan">Exercise Plan</a>
+        </div>
+  
+        <a href="login">Logout</a>
+      </div>
+    <br>
+    <br>
+
+    <div class="box">
+        <div class="column">
+            <h2>Select the exercise parameters</h2>
+            <div class="clickable-icon" onclick="showData('Muscle')">Muscle Type</div>
+            <br>
+            <div class="clickable-icon" onclick="showData('Exercise')">Exercise Type</div>
+            <br>
+            <div class="clickable-icon" onclick="showData('Difficulty')">Difficulty</div>
+            <br>
+        </div>
+
+        <div class="column" id="second-column">
+          </div>
+
+        <div class="column" id="third-column1">
+            <div id="third-column"></divid> Selected Parameters:</div>
+            <br>
+            <!-- <button class="search-button" onclick=generateMealPlan()>SEARCH</button> -->
+            <button class ="colored-button" onclick="generateExercisePlan()">SEARCH</button>
+        </div>
+    </div>
+<br>
+    <div id="exercise-plan-name"></div>
+    <div class="meal-plan" id="exercisePlan"></div>
+
+    <script>
+    var selectedItems = [];
+    console.log(selectedItems)
+    var days = ['Day 1', 'Day 2', 'Day 3', 'Day 4', 'Day 5', 'Day 6', 'Day 7'];
+    var muscleData=["abdominals","abductors","adductors","biceps","calves","chest","forearms",
+    "glutes","hamstrings","lats","lower_back","middle_back","neck","quadriceps","traps","triceps"]
+    var exerciseData=["cardio","olympic_weightlifting","plyometrics","powerlifting","strength",
+"stretching","strongman"]
+    var difficultyData =["beginner","intermediate","expert"]
+
+function showDataCalories(category) {
+    const secondColumn = document.getElementById('second-column');
+    secondColumn.innerHTML = `<strong style="text-align: center; display: block; margin-bottom: 10px;">${category}</strong>`;
+
+    const caloriesContent = `
+      <div class="card-body">
+        <h2>Daily Budget</h2>
+        <div class="desc cal">Enter your preferred min/max values for calories.</div>
+        <br>
+        <div class="calories-input-container">
+          <input type="text" class="cal-input" placeholder="Min" id="minCalInput">
+          <input type="text" class="cal-input" placeholder="Max" id="maxCalInput">
+          <span class="kcal-text">kcal</span>
+          <button onclick="applyCalorieRange()">Apply</button>
+        </div>
+        <div class="mdesc-cal" id="calorieRangeDisplay"></div>
+      </div>`;
+
+    secondColumn.innerHTML += caloriesContent;
+}
+
+function applyCalorieRange() {
+    const thirdColumn = document.getElementById('third-column');
+    const minCalInput = document.getElementById('minCalInput');
+    const maxCalInput = document.getElementById('maxCalInput');
+    const calorieRangeDisplay = document.getElementById('calorieRangeDisplay');
+
+    const minCal = minCalInput.value.trim();
+    const maxCal = maxCalInput.value.trim();
+
+    if (minCal !== '' && maxCal !== '' && !isNaN(minCal) && !isNaN(maxCal)) {
+        const calorieRange = `${minCal}-${maxCal}kcal`;
+        const calorieRangeCell = document.createElement('div');
+        calorieRangeCell.classList.add('calorie-range-cell', 'selectable-cell', 'selected-cell');
+        calorieRangeCell.innerHTML = calorieRange;
+
+        // Add an "X" button for removal
+        const removeButton = document.createElement('span');
+        removeButton.classList.add('remove-button');
+        removeButton.innerHTML = ' X';
+        removeButton.onclick = () => removeCalorieRange(calorieRange,calorieRangeCell);
+        calorieRangeCell.appendChild(removeButton);
+        thirdColumn.appendChild(calorieRangeCell);
+        addItemToSelection("calories", calorieRange);
+    } else {
+        alert('Please enter valid minimum and maximum calorie values.');
+    }
+}
+
+function removeCalorieRange(calorieRange,cell) {
+    const thirdColumn = document.getElementById('third-column');
+    thirdColumn.removeChild(cell);
+    removeItemFromSelection("calories", calorieRange);
+}
+
+function showData(category) {
+  let data = Array.from({ length: 10 }, (_, index) => `${category} Item ${index + 1}`);
+
+  // Customize data based on the category
+  if (category === "Muscle") {
+    data = muscleData;
+  } else if (category === "Exercise") {
+    data = exerciseData;
+  } else {
+    data = difficultyData;
+  }
+
+  // Display the data in the second column
+  const secondColumn = document.getElementById('second-column');
+  secondColumn.innerHTML = `<strong style="text-align: center; display: block; margin-bottom: 10px;">${category}</strong>`;
+  const categorySection = document.createElement('div');
+  categorySection.classList.add('category-section');
+
+  data.forEach((item, index) => {
+    const cell = document.createElement('div');
+    cell.classList.add('selectable-cell');
+    cell.setAttribute('data-category', category);
+    cell.setAttribute('data-item', item);
+    cell.innerHTML = item;
+    if (isItemSelected(category, item)) {
+        cell.classList.add('selected-cell');
+    }
+    cell.onclick = () => toggleSelectCell(cell, category, item);
+    categorySection.appendChild(cell);
+  });
+
+  secondColumn.appendChild(categorySection);
+}
+
+function toggleSelectCell(cell, category, item) {
+  const isSelected = cell.classList.contains('selected-cell');
+
+  if (isSelected) {
+    cell.classList.remove('selected-cell');
+    removeItemFromSelection(category, item);
+    removeSelectedItemFromThirdColumn(category, item);
+  } else {
+    cell.classList.add('selected-cell');
+    addItemToSelection(category, item);
+    addSelectedItemToThirdColumn(category, item,cell);
+  }
+}
+
+function addItemToSelection(category, item) {
+  // Check if the item is not already selected
+  const isAlreadySelected = selectedItems.some(
+    (selectedItem) => selectedItem.category === category && selectedItem.item === item
+  );
+  if (!isAlreadySelected) {
+    selectedItems.push({ category, item });
+  }
+}
+
+function removeItemFromSelection(category, item) {
+  selectedItems = selectedItems.filter(
+    (selectedItem) => !(selectedItem.category === category && selectedItem.item === item)
+  );
+  console.log(selectedItems)
+}
+
+function addSelectedItemToThirdColumn(category, item,cell) {
+    const selectedCell = document.createElement('div');
+    selectedCell.classList.add('selectable-cell', 'selected-cell');
+    selectedCell.setAttribute('data-category', category);
+    selectedCell.setAttribute('data-item', item);
+    selectedCell.innerHTML = `${category}: ${item}`;
+    columnName = "third-column";
+    const thirdColumn = document.getElementById(columnName);
+
+    // Add an "X" button for removal
+    const removeButton = document.createElement('span');
+    removeButton.classList.add('remove-button');
+    removeButton.innerHTML = ' X';
+    removeButton.onclick = () => removeSelectedItemFromThirdColumn(category, item,selectedCell);
+    //removeButton.onclick = () => removeCell(selectedCell,category, item,cell);
+    selectedCell.appendChild(removeButton);
+
+    thirdColumn.appendChild(selectedCell);
+}
+
+function removeSelectedItemFromThirdColumn(category, item) {
+    columnName = "third-column";
+  const thirdColumn = document.getElementById(columnName);
+  const selectedCell = thirdColumn.querySelector(`[data-category="${category}"][data-item="${item}"]`);
+  if (selectedCell) {
+    thirdColumn.removeChild(selectedCell);
+    removeItemFromSelection(category, item);
+
+    // Update the highlight in the second column
+    const secondColumn = document.getElementById('second-column');
+    const cell = secondColumn.querySelector(`.selectable-cell[data-category="${category}"][data-item="${item}"]`);
+    if (cell) {
+      cell.classList.remove('selected-cell');
+    }
+  }
+}
+
+document.getElementById('third-column').addEventListener('click', (event) => {
+  if (event.target.classList.contains('remove-button')) {
+    const selectedCell = event.target.parentElement;
+    const category = selectedCell.getAttribute('data-category');
+    const item = selectedCell.getAttribute('data-item');
+
+    removeSelectedItemFromThirdColumn(category, item);
+  }
+});
+
+function isItemSelected(category, item) {
+    for (let i = 0; i < selectedItems.length; i++) {
+        const selectedItem = selectedItems[i];
+        if (selectedItem.category === category && selectedItem.item === item) {
+            return true; // Item is present in the list
+        }
+    }
+    return false; // Item is not present in the list
+}
+
+function getRandomInt(min, max) {
+    return Math.floor(Math.random() * (max - min + 1)) + min;
+}
+
+function createExerciseBox(day, exerciseNumber, data, exerciseName) {
+    const exerciseBox = document.createElement('div');
+    exerciseBox.classList.add('exercise-box');
+    
+    const instructionsList = data.instructions.split('.').filter(instruction => instruction.trim() !== '');
+    const instructions = instructionsList.map((instruction, index) => `${index + 1}. ${instruction.trim()}.`).join('\n');
+
+    console.log(instructions)
+    const exerciseDetails = {
+        exercise: exerciseName,
+        name: `${data.name}`,
+        type: `${data.type}`,
+        muscle: `${data.muscle}`,
+        equipment: `${data.equipment}`,
+        difficulty: `${data.difficulty}`,
+        instructions: instructions,
+    };
+
+    const instructionsButton = document.createElement('button');
+    instructionsButton.textContent = 'Instructions';
+    instructionsButton.addEventListener('click', () => showInstructionsModal(exerciseDetails.instructions));
+
+    exerciseBox.innerHTML = `
+        <h3>${exerciseDetails.exercise}</h3>
+        <p>• Name: ${exerciseDetails.name}</p>
+        <p>• Type: ${exerciseDetails.type}</p>
+        <p>• Muscle: ${exerciseDetails.muscle}</p>
+        <p>• Equipment: ${exerciseDetails.equipment}</p>
+        <p>• Difficulty: ${exerciseDetails.difficulty}</p>
+    `;
+
+    exerciseBox.appendChild(instructionsButton);
+
+    return exerciseBox;
+}
+
+function showInstructionsModal(instructions) {
+    // Create a modal window
+    const modal = document.createElement('div');
+    modal.classList.add('modal');
+
+    // Create content for the modal
+    const modalContent = document.createElement('div');
+    modalContent.classList.add('modal-content');
+    modalContent.innerHTML = `
+        <span class="close" onclick="closeModal()">&times;</span>
+        <p style="font-family: 'Mulish, Arial, Helvetica, sans-serif';">Instructions:</p>
+        <pre style="font-family: 'Mulish, Arial, Helvetica, sans-serif';">${instructions}</pre>
+    `;
+
+    // Append modal content to modal
+    modal.appendChild(modalContent);
+
+    // Append modal to the body
+    document.body.appendChild(modal);
+
+    // Display the modal
+    modal.style.display = 'block';
+}
+
+function closeModal() {
+    // Close the modal by removing it from the DOM
+    const modal = document.querySelector('.modal');
+    modal.parentNode.removeChild(modal);
+}
+
+
+function generateExercisePlan() {
+    if (selectedItems.length == 0){
+        alert("Please select the exercise parameters.");
+        return;
+    }
+
+    var muscleItems=[]
+    var exerciseItems=[]
+    var postData={}
+    for (i=0; i<selectedItems.length;i++){
+        console.log(selectedItems[i])
+        if (selectedItems[i].category == "Muscle"){
+            muscleItems.push(selectedItems[i].item)
+        }else if (selectedItems[i].category == "Exercise"){
+            exerciseItems.push(selectedItems[i].item)
+        }else{
+            postData["difficulty"]=selectedItems[i].item
+        }
+    }
+    postData["muscle"]=muscleItems
+    postData["type"]=exerciseItems
+    console.log(postData)
+    const exercisePlanContainer = document.getElementById('exercisePlan');
+    exercisePlanContainer.innerHTML = ''
+    fetch('/getExercises', {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(postData),
+    })
+    .then(response => response.json())  // Parse the JSON response
+    .then(result => {
+        if (result.success){
+            console.log(result.exercise_data)
+            displayData(result.exercise_data)
+        }else{
+            alert('Request got failed with an error '+ result.error);
+            return
+        }
+    })
+    .catch(error => {
+        console.error('Error:', error);
+        alert('An error occurred while processing your request: ',result.error);
+    });
+
+}
+
+function displayData(data){
+    console.log(data)
+    const exercisePlanContainer = document.getElementById('exercisePlan');
+    // exercisePlanContainer.innerHTML = ''
+    const days = ['Day 1', 'Day 2', 'Day 3', 'Day 4', 'Day 5', 'Day 6', 'Day 7'];
+    const exercisePlanNameText = "Your Weekly Exercise Plan";
+    const exercisePlanNameElement = document.getElementById('exercise-plan-name');
+    exercisePlanNameElement.textContent = exercisePlanNameText;
+    exercisePlanNameElement.style.textAlign = 'center';
+    exercisePlanNameElement.style.margin = '0 auto';
+    exercisePlanNameElement.style.fontSize = '24px'; 
+
+    days.forEach(day => {
+        const dayContainer = document.createElement('div');
+        dayContainer.classList.add('day-container');
+        const dayNumber = document.createElement('h4');
+        dayNumber.textContent = day;
+        dayContainer.appendChild(dayNumber);
+
+        // Create a row for exercises
+        const exerciseRow = document.createElement('div');
+        exerciseRow.classList.add('row');
+
+        dayValue=day.replace(' ', '_')
+        console.log(dayValue)
+        console.log(data[dayValue])
+        // Create three exercise boxes for each day
+        for (let exerciseNumber = 1; exerciseNumber <= 3; exerciseNumber++) {
+            exerciseName ="Exercise "+ exerciseNumber
+            console.log(exerciseName)
+            const exerciseBox = createExerciseBox(day, exerciseNumber,data[dayValue][exerciseNumber-1],exerciseName);
+            exerciseRow.appendChild(exerciseBox);
+        }
+
+        // Append the exercise row to the day container
+        dayContainer.appendChild(exerciseRow);
+
+        // Append the day container to the exercise plan container
+        exercisePlanContainer.appendChild(dayContainer);
+    });
+}
+
+function showInstructions(instructions) {
+    // Replace this with your logic to display instructions
+    alert(instructions);
+}
+
+// Example usage:
+window.addEventListener('load', function () {
+            // Show the 'Allergies' section when the window is loaded
+            showData('Muscle');
+});
+    </script>
+</body>
+
+</html>

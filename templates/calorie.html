@@ -1,0 +1,218 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Calorie Calculator</title>
+    <link rel="stylesheet" href="static/styles.css">
+    <style>
+
+        .container {
+            margin: auto;
+            padding: 40px;
+            background-color: #ffffff;
+            border-radius: 10px;
+            box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
+            width: 50%;
+            max-width: 500px;
+            text-align: center;
+        }
+
+        form {
+            text-align: center;
+        }
+
+        form h2 {
+            color: #4caf9b;
+        }
+
+        label {
+            display: block;
+            margin: 10px 0;
+            font-weight: bold;
+            text-align: left;
+        }
+
+        input,
+        select {
+            width: 100%;
+            padding: 10px;
+            margin: 5px 0;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            box-sizing: border-box;
+        }
+
+        input[type="submit"] {
+            background-color: #4caf9b;
+            color: #fff;
+            cursor: pointer;
+        }
+
+        input[type="submit"]:hover {
+            background-color: #45a049;
+        }
+
+        .ft-inches {
+            display: none;
+        }
+
+        .ft-inches select {
+            flex: 1;
+            margin-right: 5px;
+        }
+
+        #height-ft-inches {
+            display: none;
+        }
+
+        #height-cm {
+            display: block;
+        }
+        .colored-button {
+            background-color: #378e74; /* Set the background color to a shade of blue */
+            color: white; /* Set the text color to white */
+            padding: 10px 20px; /* Adjust the padding for button size */
+            border: none; /* Remove the default button border */
+            border-radius: 5px; /* Add rounded corners */
+            cursor: pointer; /* Change the cursor to a pointer on hover */
+        }
+    </style>
+</head>
+
+<body>
+    <div class="navbar">
+        <a id="brand" href="home">DietFit</a>
+        <a href="home">Home</a>
+        <a href="about">About Us</a>
+  
+        <div class="middle">
+            <a href="bmi">BMI</a>
+            <a href="calorie">Calorie</a>
+            <a href="dietplan">Diet Plan</a>
+            <a href="exerciseplan">Exercise Plan</a>
+        </div>
+  
+        <a href="login">Logout</a>
+      </div>
+
+    <br>
+    <br>
+    <div class="container">
+        <form>
+            <h2>Calorie Calculator</h2>
+
+            <label for="height">Height:</label>
+            <div class="ft-inches" id="height-ft-inches">
+                <input type="number" id="height-ft" name="height-ft" placeholder="Feet">
+                <input type="number" id="height-in" name="height-in" placeholder="Inches">
+            </div>
+            <input type="number" id="height-cm" name="height-cm" placeholder="Centimeters">
+            <select name="heightUnit" id="heightUnit" onchange="toggleHeightFields()">
+                <option value="cm">cm</option>
+                <option value="ft">ft</option>
+            </select>
+
+            <label for="weight">Weight:</label>
+            <input type="number" id="weight" name="weight" required>
+            <select name="weightUnit" id="weightUnit">
+                <option value="kg">kg</option>
+                <option value="lbs">lbs</option>
+            </select>
+
+            <label for="age">Age:</label>
+            <input type="number" id="age" name="age" required>
+
+            <label for="gender">Gender:</label>
+            <select name="gender" id="gender" required>
+                <option value="male">Male</option>
+                <option value="female">Female</option>
+            </select>
+
+            <label for="dropdown">Select activity level:</label>
+            <select id="dropdown" name="fruit">
+                <option value="sedentary">Sedentary</option>
+                <option value="lightly active">Lightly Active</option>
+                <option value="moderately active">Moderately active</option>
+            </select>
+            <br><br>
+        <button class="colored-button" type="button" onclick="calculateCalorie(event)">Calculate Calorie Intake</button>
+        <button class="colored-button" type="button" onclick="openDietPlan()">Diet Plan</button>
+        </form>
+        <br>
+        <div id="result"></div>
+    </div>
+
+    
+
+    <script>
+        function toggleHeightFields() {
+            var heightUnit = document.getElementById("heightUnit").value;
+            var ftInches = document.getElementById("height-ft-inches");
+            var cmField = document.getElementById("height-cm");
+
+            if (heightUnit === "ft") {
+                ftInches.style.display = "flex";
+                cmField.style.display = "none";
+            } else {
+                ftInches.style.display = "none";
+                cmField.style.display = "block";
+            }
+        }
+
+        function calculateCalorie() {
+            // Get input values
+            event.preventDefault();
+
+            var gender = document.getElementById('gender').value;
+            var age = document.getElementById('age').value;
+            let height;
+            if (document.getElementById('heightUnit').value === 'cm') {
+                height = parseFloat(document.getElementById('height-cm').value) 
+            } else {
+                const feet = parseFloat(document.getElementById('height-ft').value);
+                const inches = parseFloat(document.getElementById('height-in').value);
+                // Convert feet and inches to centimeters
+                height = feet * 30.48 + inches * 2.54;
+            }
+
+            let weight = parseFloat(document.getElementById('weight').value);
+            if (document.getElementById('weightUnit').value === 'lbs') {
+                weight *= 0.453592; // Convert lbs to kg
+            }
+            var activityLevel = document.getElementById("dropdown").value;
+
+            // Prepare data for the API request
+            var data = {
+                "gender": gender,
+                "age": age,
+                "height": height,
+                "weight": weight,
+                "activity_level": activityLevel
+            };
+
+            // Make a POST request to the Flask API endpoint
+            fetch('/calculate_calories', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify(data),
+            })
+            .then(response => response.json())
+            .then(result => {
+                document.getElementById('result').innerHTML = 'Calorie Intake Count: ' + result.calorie_intake.toFixed(0) + ' kcal';
+            })
+            .catch(error => {
+                console.error('Error:', error);
+                document.getElementById('result').innerHTML = 'Error calculating Calorie intake.';
+            });
+        }
+
+        function openDietPlan() {
+            window.location.href = 'dietplan';
+        }
+    </script>
+</body>
+
+</html>
